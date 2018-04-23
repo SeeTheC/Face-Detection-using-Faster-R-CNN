@@ -115,7 +115,7 @@ options = [
 %% Train Faster RCNN
 % A trained network is loaded from disk to save time when running the
 % example. Set this flag to true to train the network. 
-doTrainingAndEval = false;
+doTrainingAndEval = true;
 
 if doTrainingAndEval
     % Set random seed to ensure example training reproducibility.
