@@ -19,9 +19,9 @@ testFile= strcat(matPath,'/wider_face_test.mat');
 savepath=strcat(basepath,'/wider_face_split');
 %% Parsing Datset and Save
 fprintf('Parsing dataset..\n');
-[dataset] = parseWiderDataset(trainFile,'Wider_train');
+[dataset] = parseWiderDataset(trainFile,'WIDER_train/images');
 save(strcat(savepath,'/parse_train_dataset.mat'),'dataset');
-[dataset] = parseWiderDataset(valFile,'Wider_val');
+[dataset] = parseWiderDataset(valFile,'WIDER_val/images');
 save(strcat(savepath,'/parse_val_dataset.mat'),'dataset');
 fprintf(' Completed \n');
 %%
