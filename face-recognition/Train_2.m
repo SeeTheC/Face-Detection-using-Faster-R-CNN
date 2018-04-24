@@ -14,7 +14,7 @@ basepath = strcat(basepath,'/Wider_MIN_16x16');
 savedBasepath=strcat(basepath,'/trained_model');
 savemodel=strcat(savedBasepath,'/model_',timestamp);
 
-trainNewModel=false;
+trainNewModel=true;
 if ~trainNewModel
     savedModelPath=strcat(savedBasepath,'/train_200');
 end
@@ -36,7 +36,7 @@ fullTrainDataset=fullTrainDataset.dataset;
 fprintf('Completed..\n');
 fullTrainDataset.Properties.VariableNames={'filename','box'};
 
-fullTrainDataset=fullTrainDataset(1:200,:);
+fullTrainDataset=fullTrainDataset(1:10,:);
 
 % Display first few rows of the data set.
 fullTrainDataset(1:2,:)
@@ -86,35 +86,38 @@ end
 %% TEST on one Image
 fprintf('Testing on image..\n')
 % Read a test image.
-I = imread(testData.filename{1});
+I = imread(testData.filename{2});
 
 % Run the detector.
 [bboxes,scores] = detect(detector,I);
 
 % Annotate detections in the image.
-I = insertObjectAnnotation(I,'rectangle',bboxes,scores);
+if size(bboxes,1)>0
+    I = insertObjectAnnotation(I,'rectangle',bboxes,scores);
+else
+    fprintf('**NO FACE FOUND')
+end
 figure
 imshow(I)
 %%  Testing result
 fprintf('\n-----------------[Testing PHASE]-------------------------------\n');
-resultpath=strcat(savedModelPath,'/','test_result.mat');
-if trainNewModel
-    
+if trainNewModel    
     [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector,testData,savemodel);    
 
-elseif (~trainNewModel && ~exist(resultpath))    
-
-    [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector,testData,savedModelPath);    
-
-else 
-    prPath=strcat(savedModelPath,'/','precision_recall.mat');
-    fprintf('Loading Pretrained Result..\n');
-    % Loading Saved Model
-    sobj=load(resultpath);
-    result=sobj.result; 
-    sobj=load(prPath);
-    tblPrecsionRecall=sobj.tbl;         
-    fprintf('Completed..\n');    
+else
+    resultpath=strcat(savedModelPath,'/','test_result.mat');
+    if  ~exist(resultpath)
+        [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector,testData,savedModelPath);    
+    else 
+        prPath=strcat(savedModelPath,'/','precision_recall.mat');
+        fprintf('Loading Pretrained Result..\n');
+        % Loading Saved Model
+        sobj=load(resultpath);
+        result=sobj.result; 
+        sobj=load(prPath);
+        tblPrecsionRecall=sobj.tbl;         
+        fprintf('Completed..\n');
+    end
 end
 tblPrecsionRecall
 fprintf('**Avg Precision of Dectector:%f ',avgPrecision);

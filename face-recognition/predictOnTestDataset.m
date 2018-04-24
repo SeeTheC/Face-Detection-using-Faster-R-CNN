@@ -2,9 +2,9 @@ function [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector
     fprintf('Evaluating for Test set...\n');
     resultsStruct = struct([]);
     savedTestImgPath=strcat(saveModelPath,'/test_img');
-    negImgInfo=strcat(savedTestImgPath,'/neg_img_info.txt');
-    negfid = fopen(negImgInfo, 'w+');
     mkdir(savedTestImgPath);
+    negImgInfo=strcat(savedTestImgPath,'/neg_img_info.txt');
+    negfid = fopen(negImgInfo, 'w+');    
     for i = 1:height(testData)      
         filename=testData.filename{i};
         I = imread(filename);        
@@ -35,7 +35,7 @@ function [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector
     savepath=strcat(saveModelPath,'/','precision_recall.mat');    
     save(savepath,'tbl');
     fprintf('Completed\n');    
-    fprintf('**Avg Precision of Dectector:%f ',avgPrecision);
+    fprintf('**Avg Precision of Dectector:%f\n',avgPrecision);
     tblPrecsionRecall=tbl;    
 end
 
