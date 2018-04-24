@@ -6,8 +6,8 @@ if server
     basepath = '../data';
 else
     basepath = '../data';
-end
-
+end 
+basepath = strcat(basepath,'/Wider');
 %% Init Dataset: Wider File Path
 
 fprintf('Init Wider dataset filepath..\n');
