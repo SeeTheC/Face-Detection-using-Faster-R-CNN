@@ -1,4 +1,4 @@
-%% Face Recognitiong using Faster R-CNN: Train
+%% Face Recognitiong using Faster R-CNN: Train_Tl : Train using transfer learning
 %% Init: Config
 clear all;
 %----------------------------[Config]--------------------------------------
@@ -10,25 +10,19 @@ else
     basepath = '../data';
 end
 timestamp=datestr(now,'dd-mm-yyyy HH:MM:SS');
-timestamp=strcat('Kali_',timestamp);
-
-basepath = strcat(basepath,'/Wider');
-%basepath = strcat(basepath,'/Wider_MIN_16x16');
+basepath = strcat(basepath,'/FDDB');
 savedBasepath=strcat(basepath,'/trained_model');
 savemodel=strcat(savedBasepath,'/model_',timestamp);
 
-trainNewModel=true;
-checkpointing=true;
+trainNewModel=false;
+checkpointing=false;
 
-if trainNewModel && checkpointing   
-    fprintf('\n Laoding Check point...\n') 
-    savemodel=strcat(savedBasepath,'/model_Kali_arch3');
-    checkpointModelPath=strcat(savemodel,'/checkpoint/','/faster_rcnn_stage_1_checkpoint__103000__2018_04_27__23_49_11.mat');
+if trainNewModel && checkpointing
+    checkpointModelPath=strcat(basepath,'/trained_model/checkpoint/','/faster_rcnn_stage_2_checkpoint__50892__2018_04_25__04_20_10.mat');
 end
 if ~trainNewModel
-    savedModelPath=strcat(savedBasepath,'/train_200');
+    savedModelPath=strcat(savedBasepath,'/model_train_2000_ap_87');
 end
-
 valPercent=0.2;
 %-------------------------------------------------------------------------
 
@@ -37,17 +31,17 @@ mkdir(savedBasepath);
 mkdir(savemodel);
 %% Init Dataset
 
-% Reading Wider dataset
-fprintf('Init Wider dataset filepath..\n');
-matPath = strcat(basepath,'/wider_face_split');
-trainFile= strcat(matPath,'/parse_train_dataset.mat');
-testFile= strcat(matPath,'/parse_val_dataset.mat');
+% Reading FDDB dataset
+fprintf('Init FDDB dataset filepath..\n');
+matPath = strcat(basepath,'/FDDB-folds');
+trainFile= strcat(matPath,'/parseFDDB_dataset.mat');
+%testFile= strcat(matPath,'/parse_val_dataset.mat');
 fullTrainDataset=load(trainFile);
-fullTrainDataset=fullTrainDataset.dataset;
+fullTrainDataset=fullTrainDataset.finaltbl;
 fprintf('Completed..\n');
 fullTrainDataset.Properties.VariableNames={'filename','box'};
 
-%fullTrainDataset=fullTrainDataset(1:600,:);
+%fullTrainDataset=fullTrainDataset(1:300,:);
 
 % Display first few rows of the data set.
 fullTrainDataset(1:2,:)
@@ -58,17 +52,17 @@ fullTrainDataset(1:2,:)
 
 %% Visualizing Dataset 
 % Read one of the images.
-imgNo=8;
+imgNo=2;
 I = imread(fullTrainDataset.filename{imgNo});
 I = insertShape(I, 'Rectangle', fullTrainDataset.box{imgNo});
 figure
 imshow(I);
 %% Creating Training anf validation Set
 idx = floor((1-valPercent) * height(fullTrainDataset));
-trainingData = fullTrainDataset(1:end,:);
-%valData = fullTrainDataset(idx:end,:);
-%% Creating Arch
-[layers,options,minInputDim]=createRCNNArch3(2,savemodel);
+trainingData = fullTrainDataset(1:idx,:);
+valData = fullTrainDataset(idx:end,:);
+%% Creating Arch using Trasfered Learning 
+[layers,options,minInputDim]=createRCNNArchVGG16(2,savemodel);
 if checkpointing
     data=load(checkpointModelPath);
     layers=data.detector;
@@ -80,12 +74,11 @@ if trainNewModel
     fprintf('Started training..\n');
     rng(0);    
     % Train Faster R-CNN detector. Select a BoxPyramidScale of 1.2 to allow
-    % for finer resolution for multiscale object detection.  
-    %        'SmallestImageDimension', 200, ...
-    detector = trainFasterRCNNObjectDetector(trainingData, layers, options, ...
+    % for finer resolution for multiscale object detection.    
+    [detector,info] = trainFasterRCNNObjectDetector(trainingData, layers, options, ...
         'NegativeOverlapRange', [0 0.3], ...
-        'PositiveOverlapRange', [0.65 1], ...   
-        'SmallestImageDimension',400,...
+        'PositiveOverlapRange', [0.65 1], ... 
+        'SmallestImageDimension', 250, ...
         'BoxPyramidScale', 1.2);
     
     savepath=strcat(savemodel,'/','detector.mat');
@@ -105,6 +98,7 @@ toc
 fprintf('Testing on image..\n')
 % Read a test image.
 I = imread(valData.filename{2});
+%I = imread(trainingData.filename{1});
 
 % Run the detector.
 [bboxes,scores] = detect(detector,I);
@@ -117,8 +111,55 @@ else
 end
 figure
 imshow(I)
+%%  Test
+doTrainingAndEval=1;
+testData=valData;
+minInputDim=[250,250];
+if doTrainingAndEval
+    % Run detector on each image in the test set and collect results.
+    resultsStruct = struct([]);
+    for i = 1:height(testData)
+        
+        % Read the image.
+        I = imread(testData.filename{i});
+        if(size(I,1)<minInputDim(1) || size(I,2)<minInputDim(2))
+            fprintf('Error:Dim of Image is less than required [%d,%d] dim:[%d,%d]\n',minInputDim(1),minInputDim(2),size(I,1),size(I,2))
+            continue;
+        end 
+        % Run the detector.
+        [bboxes, scores, labels] = detect(detector, I);
+        
+        % Collect the results.
+        resultsStruct(i).Boxes = bboxes;
+        resultsStruct(i).Scores = scores;
+        resultsStruct(i).Labels = labels;
+    end
+    
+    % Convert the results into a table.
+    results = struct2table(resultsStruct);
+else
+    % Load results from disk.
+    results = data.results;
+end
+
+% Extract expected bounding box locations from test data.
+expectedResults = testData(:, 2:end);
+
+% Evaluate the object detector using Average Precision metric.
+[ap, recall, precision] = evaluateDetectionPrecision(results, expectedResults)
+%%
+% Plot precision/recall curve
+figure
+plot(recall,precision)
+xlabel('Recall')
+ylabel('Precision')
+grid on
+title(sprintf('Average Precision = %.2f', ap))
+
+
 %%  Testing result
 fprintf('\n-----------------[Testing PHASE]-------------------------------\n');
+minInputDim=[250,250];
 if trainNewModel    
     [avgPrecision,result,tblPrecsionRecall] = predictOnTestDataset(detector,minInputDim,valData,savemodel);    
 

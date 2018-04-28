@@ -13,7 +13,7 @@ end
 savedBasepath=strcat(basepath,'/Wider_',timestamp);
 basepath = strcat(basepath,'/Wider');
 
-maxHeight=200;
+maxHeight=400;
 maxDim=[maxHeight,maxHeight];
 fprintf('**Max Height Image: %d\n',maxHeight);
 %% Init File Path
