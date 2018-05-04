@@ -1,0 +1,71 @@
+%% Vechial Tracking
+
+%% INIT Dataset
+
+data = load('fasterRCNNVehicleTrainingData.mat');
+vehicleDataset = data.vehicleTrainingData;
+
+%% Display first few rows of the data set.
+vehicleDataset(1:4,:)
+
+%%  Adding Full path
+% Add fullpath to the local vehicle data folder.
+dataDir = fullfile(toolboxdir('vision'),'visiondata');
+vehicleDataset.imageFilename = fullfile(dataDir, vehicleDataset.imageFilename);
+
+%% Showing
+% Read one of the images.
+I = imread(vehicleDataset.imageFilename{10});
+
+%% Insert the ROI labels.
+% Image Dim: 128x228x3
+I = insertShape(I, 'Rectangle', vehicleDataset.vehicle{10});
+
+%% Resize and display image.
+I = imresize(I,3);
+figure
+imshow(I)
+
+%% Split data into a training and test set.
+idx = floor(0.6 * height(vehicleDataset));
+trainingData = vehicleDataset(1:idx,:);
+testData = vehicleDataset(idx:end,:);
+
+%% Creating CNN layers
+% Create image input layer.
+inputLayer = imageInputLayer([32 32 3]);
+
+% Define the convolutional layer parameters.
+filterSize = [3 3];
+numFilters = 32;
+
+% Create the middle layers.
+middleLayers = [
+                
+    convolution2dLayer(filterSize, numFilters, 'Padding', 1)   
+    reluLayer()
+    convolution2dLayer(filterSize, numFilters, 'Padding', 1)  
+    reluLayer() 
+    maxPooling2dLayer(3, 'Stride',2)    
+    
+    ];
+
+finalLayers = [
+    
+        % Add a fully connected layer with 64 output neurons. The output size
+        % of this layer will be an array with a length of 64.
+        fullyConnectedLayer(64)
+
+        % Add a ReLU non-linearity.
+        reluLayer()
+
+        % Add the last fully connected layer. At this point, the network must
+        % produce outputs that can be used to measure whether the input image
+        % belongs to one of the object classes or background. This measurement
+        % is made using the subsequent loss layers.
+        fullyConnectedLayer(width(vehicleDataset))
+
+        % Add the softmax loss layer and classification layer. 
+        softmaxLayer()
+        classificationLayer()
+    ];
