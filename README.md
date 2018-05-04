@@ -17,6 +17,8 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - Run face-recognition/Ayush_Train_VGG_FDDB.m
 
 ## Results
+- ![Sample 1](samples/s1.pn)
+- ![Sample 1](samples/cs2016-19.png)
 - ![Sample 1](samples/51_Dresses_wearingdress_51_377.jpg)
 - ![Sample 2](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
 - ![Sample 3](samples/10_People_Marching_People_Marching_2_373.jpg)
