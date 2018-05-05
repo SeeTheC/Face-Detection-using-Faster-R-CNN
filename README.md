@@ -74,12 +74,12 @@ Face detection has vast applications in the areas ranging from surveillance, sec
  
 
 ## Results
- - Test image of our own Dataset
-    - ![Sample 1](samples/cs2016-19.png)
-    - ![Sample 2](samples/csera-19.png)
-- Test image of WIDER dataset 
-    - ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
-    - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
+### Test image of our own Dataset
+- ![Sample 1](samples/cs2016-19.png)
+- ![Sample 2](samples/csera-19.png)
+### Test image of WIDER dataset 
+- ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
+- ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
     
  ## Instructions
 To train your own model:
