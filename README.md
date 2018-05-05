@@ -85,7 +85,11 @@ Face detection has vast applications in the areas ranging from surveillance, sec
 To train your own model:
  - Write you own Architecture function(specifying model and its config).
     - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
- - Change the architectin function name in trai
+ - Change the architecture function name in train file 
+    - For WIDER Dataset [[trainWIDER.m]([face-recognition/Train_2_1_TL.m)]
+    - For FDDB dataset  [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
+ - You can also change the train and test data percent in [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m) for FDDB dataset. 
+ - WIDER has predefined seperated train and test image dataset.
   
  
  
