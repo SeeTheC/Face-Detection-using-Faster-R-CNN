@@ -73,6 +73,6 @@ Face detection has vast applications in the areas ranging from surveillance, sec
     - ![Sample 5](samples/precision_graph_FDDB.png)
 - Graph showing MAP estimate on WIDER dataset trained over VGG16
     - ![Sample 6](samples/accuracy_WIDER.png)
-- Graph showing MAP estimate on FDDB dataset tested over VGG16 model and trained over WIDER.
+- Graph showing MAP estimate on FDDB dataset tested over VGG16 model which is trained over WIDER.
     - ![Sample 7](samples/ACCURACyOfFDDBonWIDErTRAInMODEL.png)
     - 	
