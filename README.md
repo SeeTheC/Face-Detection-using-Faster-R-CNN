@@ -15,6 +15,11 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - Run face-recognition/Train_2_1_TL.m
 - Training and testing FDDB dataset on VGG16
   - Run face-recognition/Ayush_Train_VGG_FDDB.m
+
+## How to train your model
+ - Write you own Architecture function(specifying model and its config).
+    - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
+ - Change the architectin function name in train.m file.
   
 ## Overall Details
 - We used following dataset:
@@ -46,11 +51,13 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - WIDER on VGG16
     - Trained Data With reduced Dimension of images- 40%
     - Test Data on- 50%
-    - MAP estimate - 35% to 40% (with many of the faces getting ignored due to reduced dimension)
+    - MAP estimate - 20% - 25% (with many of the faces getting ignored due to reduced dimension)
   - WIDER on our own model(13 layers)
     - Train data - 1000 images
     - Testing data - 300 images
     - MAP estimate - 35%
+- Detection Time
+  - It took 0.006 secs to detect an image of dimension (700X1000) with 10-15 faces. 
 
 - Important points
   - WIDER and FDDB on Alexnet doesn't work very well
@@ -58,15 +65,22 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - We tested VGG16 model trained on WIDER and tested ON FDDB. IT gave 82% accuracy.
   - On our own model with 11 layers training took lot of time.
   - We tested our own images on VGG16 trained over WIDER network and it worked really well!
+  - WIDER trained model doesn't show good MAP estimate on WIDER test images because many faces get ignored due to reduce dimension of images. It shows good MAP estimate when WIDER trained VGG16 model is tested on FDDB(because no dimension reduction here on FDDB dataset).
+  
 
  
 
 ## Results
  - Test image of our own Dataset
-  - ![Sample 1](samples/cs2016-19.png)
-  - ![Sample 2](samples/csera-19.png)
+    - ![Sample 1](samples/cs2016-19.png)
+    - ![Sample 2](samples/csera-19.png)
 - Test image of WIDER dataset 
-  - ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
-  - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
-- Graph showing MAP estimate on FDDB data trained over VGG16
-  - ![Sample 5](samples/precision_graph_FDDB.png)
+    - ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
+    - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
+- Graph showing MAP estimate on FDDB dataset trained over VGG16
+    - ![Sample 5](samples/precision_graph_FDDB.png)
+- Graph showing MAP estimate on WIDER dataset trained over VGG16
+    - ![Sample 6](samples/accuracy_WIDER.png)
+- Graph showing MAP estimate on FDDB dataset tested over VGG16 model which is trained over WIDER.
+    - ![Sample 7](samples/ACCURACyOfFDDBonWIDErTRAInMODEL.png)
+    - 	
