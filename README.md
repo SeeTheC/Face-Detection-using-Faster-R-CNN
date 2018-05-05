@@ -46,7 +46,7 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - WIDER on VGG16
     - Trained Data With reduced Dimension of images- 40%
     - Test Data on- 50%
-    - MAP estimate - 35% to 40% (with many of the faces getting ignored due to reduced dimension)
+    - MAP estimate - 20% - 25% (with many of the faces getting ignored due to reduced dimension)
   - WIDER on our own model(13 layers)
     - Train data - 1000 images
     - Testing data - 300 images
@@ -58,6 +58,7 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - We tested VGG16 model trained on WIDER and tested ON FDDB. IT gave 82% accuracy.
   - On our own model with 11 layers training took lot of time.
   - We tested our own images on VGG16 trained over WIDER network and it worked really well!
+  - WIDER trained model doesn't show good MAP estimate on WIDER test images because many faces get ignored due to reduce dimension of images. It shows good MAP estimate when WIDER trained VGG16 model is tested on FDDB(because no dimension reduction here on FDDB dataset).
 
  
 
@@ -70,3 +71,8 @@ Face detection has vast applications in the areas ranging from surveillance, sec
     - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
 - Graph showing MAP estimate on FDDB dataset trained over VGG16
     - ![Sample 5](samples/precision_graph_FDDB.png)
+- Graph showing MAP estimate on WIDER dataset trained over VGG16
+     ![Sample 6](samples/accuracy_WIDER.png)
+- Graph showing MAP estimate on FDDB dataset tested over VGG16 model and trained over WIDER.
+     ![Sample 7](samples/ACCURACyOfFDDBonWIDErTRAInMODEL.png)
+    - 	
