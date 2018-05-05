@@ -62,8 +62,11 @@ Face detection has vast applications in the areas ranging from surveillance, sec
  
 
 ## Results
-- ![Sample 1](samples/cs2016-19.png)
-- ![Sample 2](samples/csera-19.png)
-- ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
-- ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
-- ![Sample 5](samples/precision_graph_FDDB.png)
+ - Test image of our own Dataset
+  - ![Sample 1](samples/cs2016-19.png)
+  - ![Sample 2](samples/csera-19.png)
+- Test image of WIDER dataset 
+  - ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
+  - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
+- Graph showing MAP estimate on FDDB data trained over VGG16
+  - ![Sample 5](samples/precision_graph_FDDB.png)
