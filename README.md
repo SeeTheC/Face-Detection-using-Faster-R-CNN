@@ -1,4 +1,4 @@
-# Face-Recognition-using-Faster-R-CNN
+# Face Detection using Faster-R-CNN
 Face Recognition using Faster R-CNN
 
 ## Abstract
@@ -15,8 +15,17 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - For FDDB RUN [parseFddbDataset.m](face-recognition/parseFddbDataset.m)
   - For WIDER RUN [parseWiderDataset.m](face-recognition/parseWiderDataset.m) 
 - Training and testing 
-  - For WIDER dataset on VGG16 Run [trainWIDER.m]([face-recognition/Train_2_1_TL.m)
+  - For WIDER dataset on VGG16 Run [trainWIDER.m]([face-recognition/Train.m)
   - For FDDB dataset on VGG16 Run [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
+  
+For train your own model:
+ - Write you own Architecture function(specifying model and its config).
+    - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
+ - Change the architecture function name in train file 
+    - For WIDER Dataset [[trainWIDER.m](face-recognition/Train_2_1_TL.m)
+    - For FDDB dataset  [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
+ - You can also change the train and test data percent in [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m) for FDDB dataset. 
+ - WIDER has predefined seperated train and test image dataset.
 
 ## Overall Details
 - We used following dataset:
@@ -81,16 +90,6 @@ Face detection has vast applications in the areas ranging from surveillance, sec
 - ![Sample 3](samples/29_Students_Schoolkids_Students_Schoolkids_29_251.jpg)
 - ![Sample 4](samples/10_People_Marching_People_Marching_2_373.jpg)
     
- ## Instructions
-To train your own model:
- - Write you own Architecture function(specifying model and its config).
-    - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
- - Change the architecture function name in train file 
-    - For WIDER Dataset [[trainWIDER.m](face-recognition/Train_2_1_TL.m)
-    - For FDDB dataset  [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
- - You can also change the train and test data percent in [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m) for FDDB dataset. 
- - WIDER has predefined seperated train and test image dataset.
-  
  
  
  ## References
