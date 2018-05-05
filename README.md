@@ -15,6 +15,11 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - Run face-recognition/Train_2_1_TL.m
 - Training and testing FDDB dataset on VGG16
   - Run face-recognition/Ayush_Train_VGG_FDDB.m
+
+## How to train your model
+ - Write you own Architecture function(specifying model and its config).
+    - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
+ - Change the architectin function name in train.m file.
   
 ## Overall Details
 - We used following dataset:
@@ -51,6 +56,8 @@ Face detection has vast applications in the areas ranging from surveillance, sec
     - Train data - 1000 images
     - Testing data - 300 images
     - MAP estimate - 35%
+- Detection Time
+  - It took 0.006 secs to detect an image of dimension (700X1000) with 10-15 faces. 
 
 - Important points
   - WIDER and FDDB on Alexnet doesn't work very well
@@ -59,6 +66,7 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - On our own model with 11 layers training took lot of time.
   - We tested our own images on VGG16 trained over WIDER network and it worked really well!
   - WIDER trained model doesn't show good MAP estimate on WIDER test images because many faces get ignored due to reduce dimension of images. It shows good MAP estimate when WIDER trained VGG16 model is tested on FDDB(because no dimension reduction here on FDDB dataset).
+  
 
  
 
