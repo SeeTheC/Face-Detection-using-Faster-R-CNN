@@ -1,0 +1,5 @@
+validate set precision: 20%
+NOTE: Sepration fo validate and Test is not Radomized.
+Test set: 14%
+FDDB: 76%
+
