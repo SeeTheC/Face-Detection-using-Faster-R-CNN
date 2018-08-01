@@ -1,5 +1,5 @@
-# Face Detection using Faster-R-CNN
-Face Recognition using Faster R-CNN
+# Multiple Face Detection using Faster-R-CNN
+Multiple Face Recognition using Faster R-CNN
 
 ## Abstract
 Face detection has vast applications in the areas ranging from surveillance, security, crowd size estimation to social networking etc. The challenge lies in creating a model which is agnostic to lightning conditions, pose, accessories and occlusion. We aim to create a pipeline which takes an image as an input and creates a bounding box on the faces of all the people in the image. 
