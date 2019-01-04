@@ -1,0 +1,9 @@
+maxheightofbox=590.318
+minheightOfbox=2
+secondminheightOfbox=14.337
+
+
+maxheightofimage=450
+maxwidthofimg=1350
+minheightofimg=171
+minwidthofimg=297
