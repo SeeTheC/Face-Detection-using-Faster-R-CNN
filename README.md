@@ -2,7 +2,7 @@
 Multiple Face Recognition using Faster R-CNN
 
 ## Abstract
-Face detection has vast applications in the areas ranging from surveillance, security, crowd size estimation to social networking etc. The challenge lies in creating a model which is agnostic to lightning conditions, pose, accessories and occlusion. We aim to create a pipeline which takes an image as an input and creates a bounding box on the faces of all the people in the image. 
+Face detection has vast applications in the areas ranging from surveillance, security, crowd size estimation to social networking, etc. The challenge lies in creating a model which is agnostic to lightning conditions, pose, accessories and occlusion. We aim to create a pipeline which takes an image as an input and creates a bounding box on the faces of all the people in the image. 
 
 ## Dependencies
 - Matlab 2018
@@ -19,8 +19,8 @@ Face detection has vast applications in the areas ranging from surveillance, sec
   - For FDDB dataset on VGG16 Run [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
   
 For training your own model:
- - Write you own Architecture function(specifying model and its config).
-    - smaple Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
+ - Write your own Architecture function(specifying model and its config).
+    - sample Architecture fuctions are [createRCNNArchVGG16.m](face-recognition/createRCNNArchVGG16.m), [createRCNNArchAlexNet.m](face-recognition/createRCNNArchAlexNet.m)
  - Change the architecture function name in train file 
     - For WIDER Dataset [[trainWIDER.m](face-recognition/Train_2_1_TL.m)
     - For FDDB dataset  [trainFDDB.m](face-recognition/Ayush_Train_VGG_FDDB.m)
@@ -28,23 +28,23 @@ For training your own model:
  - WIDER has predefined seperated train and test image dataset.
 
 ## Overall Details
-- We used following dataset:
+- We used the following dataset:
   - WIDER
     -32,203 images and label 393,703 faces with a high degree of variability in scale, pose and occlusion as depicted in the sample images.WIDER FACE dataset is organized based on 61 event classes. For each event class, we randomly select 40%/10%/50% data as training, validation and testing sets.
   - FDDB. This data set contains the annotations for 5171 faces in a set of 2845 images.
   - Some of our own images
 
-- We Train our dataset on following model:
+- We Train our dataset on the following model:
   - Alexnet
   - VGG16
   - Made our own model on 11 layers
 
-- We had following constraints:
-  - Due to lack of gpu we have to reduce size of our images.
-  example: WIDER images had (1200X1500) approx size. We have to reduce size of the image to (600X(600*rescaleFactor)).
-  - Due to reduction in size of images some of the faces which were almost not visible (as small as a dot). Detector ignored these faces.
-  - This reduced the accuracy of the model. Otherwise it would have shown overall better accuracy.
-  - Traing process was time consuming because of lack of resources.
+- We had the following constraints:
+  - Due to lack of GPU we have to reduce the size of our images.
+  example: WIDER images had (1200X1500) approx size. We have to reduce the size of the image to (600X(600*rescaleFactor)).
+  - Due to the reduction in the size of images some of the faces which were almost not visible (as small as a dot). Detector ignored these faces.
+  - This reduced the accuracy of the model. Otherwise, it would have shown overall better accuracy.
+  - Training process was time-consuming because of lack of resources.
 
 
 
@@ -73,9 +73,9 @@ For training your own model:
   - WIDER and FDDB on Alexnet give less accuracy than VGG16
   - We tested VGG16 model trained on WIDER and tested ON FDDB. IT gave 82% accuracy.
   - We tested Alexnet model trained on WIDER and tested ON FDDB. IT gave 79.4% accuracy.
-  - On our own model with 11 layers training took lot of time. Because of less number of "Max pooling" layer
-  - We tested our own images on VGG16 trained over WIDER network and it worked really well!
-  - WIDER trained model doesn't show good MAP estimate on WIDER test images because many faces get ignored due to reduce dimension of images. It shows good MAP estimate when WIDER trained VGG16 model is tested on FDDB(because no dimension reduction here on FDDB dataset).
+  - On our own model with 11 layers training took a lot of time. Because of less number of "Max pooling" layer
+  - We tested our own images on VGG16 trained over a WIDER network and it worked really well!
+  - WIDER trained model doesn't show good MAP estimate on WIDER test images because many faces get ignored due to reduce the dimension of images. It shows good MAP estimate when WIDER trained VGG16 model is tested on FDDB(because of no dimension reduction here on FDDB dataset).
   
 ## Here are the plots of the losses and accuracies of some of the best models
 - Graph showing MAP estimate on FDDB dataset trained over VGG16
